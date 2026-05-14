@@ -5,26 +5,182 @@ The mathematical representation of linear regression is a linear equation that c
 
 𝑦=β0+β1∗𝑋1+β2∗𝑋2
 
+
 Imports & Data
 Scikit-Learn library is used to perform the linear regression and has some of very common datasets to play with.
 
+Independent Variables
+Independent variables are used to predict the value of dependent variable. For illustration purposes, we will use only one feature i.e. only one column as an independent variable. We are using the previous day's return to predict today's return.
 
-import pandas as pd
-# Import matplotlib as an alias plt and set the style
-import matplotlib.pyplot as plt
-%matplotlib inline
-plt.style.use('seaborn-v0_8-darkgrid')
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score, explained_variance_score
+Dependent Variable
+Dependent/target variable is the outcome which the machine learning model will predict based on the independent variables. We will split the dependent variable into train and test dataset. Train sample will be used along with the independent dataset X, and the test sample will be compared with predicted values.
 
-# The data is stored in the directory 'data'
-path = '../data/'
+Regression Model
+We will use the linear_model function of the scikit-learn library to create a linear regression model.
 
-# Read the csv file using read_csv method of pandas
-df = pd.read_csv(path + 'SPY.csv', index_col=0)
+Mean Squared Error
+Mean square error (MSE) is the average of the square of the errors. The larger the number, the larger the error.
 
-# Convert index to datetime format
-df.index = pd.to_datetime(df.index)
+Plot Regression Line
+We will plot the regression line for our model to get a visual representation.
 
-# Print the first five rows 
-df.head()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
