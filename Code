@@ -1,0 +1,167 @@
+# Import data
+
+
+import pandas as pd
+# Import matplotlib as an alias plt and set the style
+import matplotlib.pyplot as plt
+%matplotlib inline
+plt.style.use('seaborn-v0_8-darkgrid')
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score, explained_variance_score
+
+# The data is stored in the directory 'data'
+path = '../data/'
+
+# Read the csv file using read_csv method of pandas
+df = pd.read_csv(path + 'SPY.csv', index_col=0)
+
+# Convert index to datetime format
+df.index = pd.to_datetime(df.index)
+
+# Print the first five rows 
+df.head()
+
+
+##INDEPENDENT VARIABLE
+
+# Use only one feature as a independent variable - we are using the previous day's return
+
+df['return'] = df['Close'].pct_change()
+df['prev_day_returns'] = df['return'].shift()
+df.dropna(inplace=True)
+    
+X = df[['prev_day_returns']]
+
+# keep time order, last 20% as test
+test_frac = 0.20
+split = int(len(X) * (1 - test_frac))
+
+# Split the independent data into training/testing sets
+X_train = X.iloc[:split]
+X_test  = X.iloc[split:]
+
+
+
+## DEPENDENT VARIABLE
+
+
+df_y = df['return'] 
+
+# Split the dependent data into training/testing sets
+y_train = df_y.iloc[:split]
+y_test  = df_y.iloc[split:]
+y_test.head()
+
+
+##REGRESSION MODEL
+
+# Create linear regression object
+regr = LinearRegression()
+
+# Train the model using the training sets
+regr.fit(X_train, y_train)
+
+
+## MEAN SQUARED ERROR
+
+# Mean squared error
+mse  = mean_squared_error(y_test, y_pred)
+print(f"Mean squared error: {mse:.6f}")
+
+
+##PLOT REGRESSION LINE
+
+r2   = r2_score(y_test, y_pred)                         # same as regr.score(X_test, y_test)
+print(f" R²:{r2:.4f}")
+
+# Plot outputs
+plt.figure(figsize=(10, 7))
+plt.scatter(X_test, y_test, color='black')
+plt.plot(X_test, regr.predict(X_test), color='blue', linewidth=3)
+plt.title('Linear Regression Model', fontsize=14)
+plt.xlabel('Independent Variable', fontsize=12)
+plt.ylabel('Dependent Variable', fontsize=12)
+plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
