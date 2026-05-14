@@ -8,3 +8,23 @@ The mathematical representation of linear regression is a linear equation that c
 Imports & Data
 Scikit-Learn library is used to perform the linear regression and has some of very common datasets to play with.
 
+
+import pandas as pd
+# Import matplotlib as an alias plt and set the style
+import matplotlib.pyplot as plt
+%matplotlib inline
+plt.style.use('seaborn-v0_8-darkgrid')
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score, explained_variance_score
+
+# The data is stored in the directory 'data'
+path = '../data/'
+
+# Read the csv file using read_csv method of pandas
+df = pd.read_csv(path + 'SPY.csv', index_col=0)
+
+# Convert index to datetime format
+df.index = pd.to_datetime(df.index)
+
+# Print the first five rows 
+df.head()
