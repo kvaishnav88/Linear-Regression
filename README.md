@@ -1,30 +1,45 @@
-# Linear-Regression
-Linear Regression is one of the most well-known algorithms in machine learning and statistics. Here, you will be given a brief overview of how it works and how you can use it in your machine learning problems. Linear Regression was developed under the field of statistics to study the relationship between input and output numerical variables but has been borrowed by machine learning to make predictions based on a linear regression equation.
+## Overview
+Linear Regression is the foundational algorithm for predicting a continuous target variable as a weighted linear combination of input features. It assumes the relationship between inputs and output is additive and linear — the model is essentially fitting the best straight line (or hyperplane, in higher dimensions) through the data. Despite its simplicity, it remains widely used because it's fast, interpretable, and a strong baseline against which more complex models should always be compared.
 
-The mathematical representation of linear regression is a linear equation that combines a specific set of input data (X) to predict the output value (y) for that set of input values. The linear equation assigns a factor to each set of input values, which are called the coefficients represented by the Greek letter Beta (β). The equation mentioned below represents a linear regression model with two sets of input values,  𝑥1 and  𝑥2 . Ahead, y represents the output of the model, whereas  β0 ,  β1 and  β2 are the coefficients of the linear equation.
+## How It Works
+The model predicts: **ŷ = β₀ + β₁x₁ + β₂x₂ + ... + βₙxₙ**, where β₀ is the intercept and each βᵢ is a learned coefficient representing how much the target changes for a one-unit increase in that feature (holding others constant). The coefficients are found by minimizing the **Sum of Squared Errors (SSE)** between predicted and actual values — this is **Ordinary Least Squares (OLS)**, which has a closed-form analytical solution (the "normal equation") for smaller datasets, or can be solved iteratively via **Gradient Descent** for larger ones.
 
-𝑦=β0+β1∗𝑋1+β2∗𝑋2
+## Key Assumptions (Worth Checking Before Trusting the Model)
+- **Linearity:** the relationship between features and target is actually linear
+- **Independence of errors:** residuals aren't correlated with each other (violated in time series with autocorrelation)
+- **Homoscedasticity:** residual variance is constant across all predicted values (not "funnel-shaped" when plotted)
+- **Normality of residuals:** errors are approximately normally distributed (mainly matters for valid confidence intervals/p-values, less for prediction accuracy itself)
+- **No severe multicollinearity:** features aren't highly correlated with each other, which destabilizes coefficient estimates
 
+## Methods & Techniques
+- **Regularization** — plain OLS overfits with many features or multicollinearity. Two standard fixes:
+  - **Ridge Regression (L2):** adds a penalty proportional to the sum of squared coefficients, shrinking all coefficients toward zero without eliminating any — good when most features are at least somewhat useful
+  - **Lasso Regression (L1):** adds a penalty proportional to the sum of absolute coefficients, which can shrink some coefficients to *exactly* zero — effectively performing automatic feature selection
+  - **Elastic Net:** a weighted blend of L1 and L2, useful when you want some feature selection but also want to handle correlated features gracefully (Lasso alone tends to arbitrarily pick one of several correlated features)
+- **Polynomial Regression:** extends linear regression to capture curved relationships by adding polynomial terms (x², x³, interaction terms) — still "linear" in the coefficients, just nonlinear in the original features
+- **Feature scaling:** not required for plain OLS to fit correctly, but essential before regularization (Ridge/Lasso) since the penalty term is scale-sensitive — features with larger raw ranges would be penalized unfairly more/less
+- **Multicollinearity diagnosis:** **Variance Inflation Factor (VIF)** to detect and address correlated predictors before trusting individual coefficient interpretations
+- **Outlier handling:** OLS is sensitive to outliers (squared error penalizes large residuals heavily) — inspect residual plots and consider robust regression (Huber loss) if outliers are a concern
 
-Imports & Data
-Scikit-Learn library is used to perform the linear regression and has some of very common datasets to play with.
+## Evaluation Metrics
+- **R² (coefficient of determination):** proportion of variance in the target explained by the model (0 to 1, higher is better) — but always compare against **Adjusted R²** when comparing models with different numbers of features, since plain R² never decreases as you add features, even useless ones
+- **RMSE (Root Mean Squared Error):** same units as the target, penalizes large errors more heavily
+- **MAE (Mean Absolute Error):** more robust to outliers than RMSE, easier to interpret directly
+- **Residual plots:** visually check for patterns (curvature = missing nonlinearity, funnel shape = heteroscedasticity)
 
-Independent Variables
-Independent variables are used to predict the value of dependent variable. For illustration purposes, we will use only one feature i.e. only one column as an independent variable. We are using the previous day's return to predict today's return.
+## When to Use It
+Best for problems with a genuinely linear (or near-linear) relationship, when interpretability matters (e.g. "each additional year of experience adds $X to predicted salary"), and as a fast, low-variance baseline before reaching for more complex models.
 
-Dependent Variable
-Dependent/target variable is the outcome which the machine learning model will predict based on the independent variables. We will split the dependent variable into train and test dataset. Train sample will be used along with the independent dataset X, and the test sample will be compared with predicted values.
+## Strengths & Limitations
+| Strengths | Limitations |
+|---|---|
+| Highly interpretable coefficients | Cannot capture nonlinear relationships without manual feature engineering |
+| Fast to train, even on large datasets | Sensitive to outliers |
+| Well-understood statistical theory (confidence intervals, hypothesis tests) | Assumes linearity, independence, homoscedasticity |
+| Good baseline / sanity check | Struggles with multicollinearity if not regularized |
 
-Regression Model
-We will use the linear_model function of the scikit-learn library to create a linear regression model.
-
-Mean Squared Error
-Mean square error (MSE) is the average of the square of the errors. The larger the number, the larger the error.
-
-Plot Regression Line
-We will plot the regression line for our model to get a visual representation.
-
-
+---
+---
 
 
 
